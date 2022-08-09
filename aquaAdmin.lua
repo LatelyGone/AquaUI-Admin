@@ -1,30 +1,118 @@
-local AquaAdmin = Instance.new("ScreenGui")
+local States = {}
+
+States.Auto_Refresh = true
+
+local function GetOrientation()
+	local PosX, PosY, PosZ = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame:ToOrientation()
+	return CFrame.new(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.X, game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Y, game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Z) * CFrame.fromOrientation(0, PosY, 0)
+end
+
+local function GetCamPos()
+	return workspace.CurrentCamera.CFrame
+end
+
+spawn(function()
+	while wait() do
+		if States.Auto_Refresh == true then
+			pcall(function()
+				if game.Players.LocalPlayer.Character.Humanoid.Health < 1 then
+					if game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("Home").hud.Topbar.titleBar.Title.Text ~= "Lights out" then
+						if game.Players.LocalPlayer.TeamColor.Name ~= "Medium stone grey" then
+							if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+								local savedcf = GetOrientation()
+								local savedcamcf = GetCamPos()
+								workspace.Remote.loadchar:InvokeServer()
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["AK-47"].ITEMPICKUP)
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedcf
+								workspace.CurrentCamera.CFrame = savedcamcf
+							end
+						else
+							if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+								local savedcf = GetOrientation()
+								local savedcamcf = GetCamPos()
+								workspace.Remote.loadchar:InvokeServer(nil, BrickColor.new("Bright orange").Name)
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["AK-47"].ITEMPICKUP)
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedcf
+								workspace.CurrentCamera.CFrame = savedcamcf
+								workspace.Remote.TeamEvent:FireServer("Medium stone grey")
+							end
+						end
+					else
+						if game.Players.LocalPlayer.TeamColor.Name ~= "Medium stone grey" then
+							if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+								local savedcf = GetOrientation()
+								local savedcamcf = GetCamPos()
+								workspace.Remote.loadchar:InvokeServer()
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["AK-47"].ITEMPICKUP)
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
+								wait(.075)
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedcf
+								workspace.CurrentCamera.CFrame = savedcamcf
+							end
+						else
+							if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+								local savedcf = GetOrientation()
+								local savedcamcf = GetCamPos()
+								workspace.Remote.loadchar:InvokeServer(nil, BrickColor.new("Bright orange").Name)
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["AK-47"].ITEMPICKUP)
+								workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
+								wait(.075)
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedcf
+								workspace.CurrentCamera.CFrame = savedcamcf
+								workspace.Remote.TeamEvent:FireServer("Medium stone grey")
+							end
+						end
+					end
+				end
+			end)
+		end
+	end
+end)
+
+workspace.Remote.loadchar:InvokeServer(nil, BrickColor.new("Really black").Name)
+
+COREGUI = game:GetService("CoreGui")
+if not game:IsLoaded() then
+	local notLoaded = Instance.new("Message")
+	notLoaded.Parent = COREGUI
+	notLoaded.Text = 'AquaUI is waiting for the game to load'
+	game.Loaded:Wait()
+	notLoaded:Destroy()
+end
+
+local Aqua = Instance.new("ScreenGui")
 local EXEFrame = Instance.new("Frame")
-local exeBar = Instance.new("TextBox")
-local UICorner = Instance.new("UICorner")
-local uiCorner = Instance.new("UICorner")
-local ImageButton = Instance.new("ImageButton")
-local UICorner_2 = Instance.new("UICorner")
-local ImageButton_2 = Instance.new("ImageButton")
-local UICorner_3 = Instance.new("UICorner")
-local ImageButton_3 = Instance.new("ImageButton")
-local UICorner_4 = Instance.new("UICorner")
-local CMDFrame = Instance.new("Frame")
-local uiCorner_2 = Instance.new("UICorner")
-local findCMD = Instance.new("TextBox")
-local UICorner_5 = Instance.new("UICorner")
-local cmdHandler = Instance.new("ScrollingFrame")
-local uiList = Instance.new("UIListLayout")
-local cmdText = Instance.new("TextButton")
-local HOMEFrame = Instance.new("Frame")
-local UICorner_6 = Instance.new("UICorner")
+local EXETopbar = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
+local UICorner = Instance.new("UICorner")
+local exeBar = Instance.new("TextBox")
+local UICorner_2 = Instance.new("UICorner")
+local UICorner_3 = Instance.new("UICorner")
+local HOMEFRame = Instance.new("Frame")
+local HOMETopbar = Instance.new("Frame")
+local Title_2 = Instance.new("TextLabel")
+local UICorner_4 = Instance.new("UICorner")
+local UICorner_5 = Instance.new("UICorner")
+local CMDFrame = Instance.new("Frame")
+local findCmd = Instance.new("TextBox")
+local CMDTopbar = Instance.new("Frame")
+local Title_3 = Instance.new("TextLabel")
+local UICorner_6 = Instance.new("UICorner")
+local cmdHandler = Instance.new("ScrollingFrame")
+local cmdUIList = Instance.new("UIListLayout")
+local cmdText = Instance.new("TextButton")
 local UICorner_7 = Instance.new("UICorner")
-local credits = Instance.new("TextLabel")
-local NotiFrame = Instance.new("Frame")
-local Topbar = Instance.new("TextLabel")
-local UICorner_9 = Instance.new("UICorner")
+local NOTIFrame = Instance.new("Frame")
+local NOTITopbar = Instance.new("Frame")
+local Title_4 = Instance.new("TextLabel")
 local UICorner_8 = Instance.new("UICorner")
+local UICorner_9 = Instance.new("UICorner")
 local cmdTitle = Instance.new("TextLabel")
 local Background4 = Instance.new("Frame")
 local Notify6 = Instance.new("TextLabel")
@@ -35,184 +123,234 @@ local Notify2 = Instance.new("TextLabel")
 local Notify1 = Instance.new("TextLabel")
 local Prefix = ";"
 
-AquaAdmin.Name = "AquaAdmin"
-AquaAdmin.Parent = game:GetService("CoreGui")
+function randomString()
+	local length = math.random(10,20)
+	local array = {}
+	for i = 1, length do
+		array[i] = string.char(math.random(32, 126))
+	end
+	return table.concat(array)
+end
+
+Aqua.Name = randomString()
+Aqua.Parent = COREGUI
+Aqua.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 EXEFrame.Name = "EXEFrame"
-EXEFrame.Parent = AquaAdmin
-EXEFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
+EXEFrame.Parent = Aqua
+EXEFrame.Active = true
+EXEFrame.BackgroundColor3 = Color3.fromRGB(34, 38, 42)
+EXEFrame.BackgroundTransparency = 0.200
 EXEFrame.BorderSizePixel = 0
-EXEFrame.Position = UDim2.new(0.307215244, 0, 0.64864862, 158)
-EXEFrame.Size = UDim2.new(0, 525, 0, 50)
+EXEFrame.ClipsDescendants = true
+EXEFrame.Position = UDim2.new(0.307267934, 0, 0.819197059, 0)
+EXEFrame.Size = UDim2.new(0, 525, 0, 95)
+EXEFrame.ZIndex = 2
+
+EXETopbar.Name = "EXETopbar"
+EXETopbar.Parent = EXEFrame
+EXETopbar.Active = true
+EXETopbar.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+EXETopbar.BorderSizePixel = 0
+EXETopbar.Size = UDim2.new(0, 525, 0, 20)
+
+Title.Name = "Title"
+Title.Parent = EXETopbar
+Title.Active = true
+Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title.BackgroundTransparency = 1.000
+Title.BorderSizePixel = 0
+Title.Position = UDim2.new(0, 5, 0, 0)
+Title.Size = UDim2.new(0, 195, 0, 20)
+Title.Font = Enum.Font.GothamMedium
+Title.Text = "Executor"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 14.000
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+UICorner.CornerRadius = UDim.new(0, 5)
+UICorner.Parent = EXETopbar
 
 exeBar.Name = "exeBar"
 exeBar.Parent = EXEFrame
-exeBar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+exeBar.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 exeBar.BorderSizePixel = 0
-exeBar.Position = UDim2.new(0.203999996, 20, 0, 10)
-exeBar.Size = UDim2.new(0.338999987, 199, 1, -20)
-exeBar.Font = Enum.Font.SourceSans
-exeBar.MultiLine = false
-exeBar.PlaceholderColor3 = Color3.fromRGB(247,247,247)
-exeBar.PlaceholderText = "Press "..Prefix.." To Enter"
+exeBar.Position = UDim2.new(0.304761916, 0, 0.410526305, 0)
+exeBar.Size = UDim2.new(0, 335, 0, 25)
+exeBar.Font = Enum.Font.Code
+exeBar.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
 exeBar.Text = ""
-exeBar.TextColor3 = Color3.fromRGB(247, 247, 247)
+exeBar.TextColor3 = Color3.fromRGB(255, 255, 255)
 exeBar.TextSize = 14.000
 
-UICorner.CornerRadius = UDim.new(0, 5)
-UICorner.Parent = exeBar
-
-uiCorner.CornerRadius = UDim.new(0, 5)
-uiCorner.Name = "uiCorner"
-uiCorner.Parent = EXEFrame
-
-ImageButton.Parent = EXEFrame
-ImageButton.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-ImageButton.BorderSizePixel = 0
-ImageButton.Position = UDim2.new(0.185000002, -10, 0.200000003, 0)
-ImageButton.Size = UDim2.new(0, 30, 0, 30)
-ImageButton.Image = "rbxassetid://7072707704"
-
 UICorner_2.CornerRadius = UDim.new(0, 5)
-UICorner_2.Parent = ImageButton
+UICorner_2.Parent = exeBar
 
-ImageButton_2.Parent = EXEFrame
-ImageButton_2.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-ImageButton_2.BorderSizePixel = 0
-ImageButton_2.Position = UDim2.new(0.108999997, -10, 0.200000003, 0)
-ImageButton_2.Size = UDim2.new(0, 30, 0, 30)
-ImageButton_2.Image = "rbxassetid://7072717697"
+UICorner_3.CornerRadius = UDim.new(0.0500000007, 0)
+UICorner_3.Parent = EXEFrame
 
-UICorner_3.CornerRadius = UDim.new(0, 5)
-UICorner_3.Parent = ImageButton_2
+HOMEFRame.Name = "HOMEFRame"
+HOMEFRame.Parent = Aqua
+HOMEFRame.Active = true
+HOMEFRame.BackgroundColor3 = Color3.fromRGB(34, 38, 42)
+HOMEFRame.BackgroundTransparency = 0.200
+HOMEFRame.BorderSizePixel = 0
+HOMEFRame.ClipsDescendants = true
+HOMEFRame.Position = UDim2.new(0.307732075, 0, 0.485824823, 0)
+HOMEFRame.Size = UDim2.new(0, 525, 0, 225)
 
-ImageButton_3.Parent = EXEFrame
-ImageButton_3.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-ImageButton_3.BorderSizePixel = 0
-ImageButton_3.Position = UDim2.new(0.0320000015, -9, 0.200000003, 0)
-ImageButton_3.Size = UDim2.new(0, 30, 0, 30)
-ImageButton_3.Image = "rbxassetid://7072707198"
+HOMETopbar.Name = "HOMETopbar"
+HOMETopbar.Parent = HOMEFRame
+HOMETopbar.Active = true
+HOMETopbar.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+HOMETopbar.BorderSizePixel = 0
+HOMETopbar.Size = UDim2.new(0, 525, 0, 20)
+
+Title_2.Name = "Title"
+Title_2.Parent = HOMETopbar
+Title_2.Active = true
+Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title_2.BackgroundTransparency = 1.000
+Title_2.BorderSizePixel = 0
+Title_2.Position = UDim2.new(0, 5, 0, 0)
+Title_2.Size = UDim2.new(0, 170, 0, 20)
+Title_2.Font = Enum.Font.GothamMedium
+Title_2.Text = "Home"
+Title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title_2.TextSize = 14.000
+Title_2.TextXAlignment = Enum.TextXAlignment.Left
 
 UICorner_4.CornerRadius = UDim.new(0, 5)
-UICorner_4.Parent = ImageButton_3
+UICorner_4.Parent = HOMETopbar
+
+UICorner_5.CornerRadius = UDim.new(0.0500000007, 0)
+UICorner_5.Parent = HOMEFRame
 
 CMDFrame.Name = "CMDFrame"
-CMDFrame.Parent = AquaAdmin
-CMDFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
+CMDFrame.Parent = Aqua
+CMDFrame.Active = true
+CMDFrame.BackgroundColor3 = Color3.fromRGB(34, 38, 42)
+CMDFrame.BackgroundTransparency = 0.200
+CMDFrame.BorderSizePixel = 0
 CMDFrame.ClipsDescendants = true
-CMDFrame.Position = UDim2.new(0.182, -10,0.618, 0)
-CMDFrame.Size = UDim2.new(0, 175, 0, 225)
+CMDFrame.Position = UDim2.new(0.171679363, 0, 0.484614253, 0)
+CMDFrame.Size = UDim2.new(0, 175, 0, 325)
 
-uiCorner_2.CornerRadius = UDim.new(0, 5)
-uiCorner_2.Name = "uiCorner"
-uiCorner_2.Parent = CMDFrame
+findCmd.Name = "findCmd"
+findCmd.Parent = CMDFrame
+findCmd.BackgroundColor3 = Color3.fromRGB(1, 1, 1)
+findCmd.BackgroundTransparency = 1.000
+findCmd.BorderSizePixel = 0
+findCmd.Position = UDim2.new(0, 0, 0.0645161271, 0)
+findCmd.Size = UDim2.new(0, 175, 0, 20)
+findCmd.Font = Enum.Font.Code
+findCmd.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
+findCmd.PlaceholderText = "Search Here"
+findCmd.Text = ""
+findCmd.TextColor3 = Color3.fromRGB(255, 255, 255)
+findCmd.TextSize = 14.000
 
-findCMD.Name = "findCMD"
-findCMD.Parent = CMDFrame
-findCMD.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-findCMD.Size = UDim2.new(0, 175, 0, 20)
-findCMD.Font = Enum.Font.SourceSans
-findCMD.Text = ""
-findCMD.TextColor3 = Color3.fromRGB(247,247,247)
-findCMD.TextSize = 14.000
+CMDTopbar.Name = "CMDTopbar"
+CMDTopbar.Parent = CMDFrame
+CMDTopbar.Active = true
+CMDTopbar.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+CMDTopbar.BorderSizePixel = 0
+CMDTopbar.Size = UDim2.new(0, 175, 0, 20)
 
-UICorner_5.CornerRadius = UDim.new(0, 5)
-UICorner_5.Parent = findCMD
+Title_3.Name = "Title"
+Title_3.Parent = CMDTopbar
+Title_3.Active = true
+Title_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title_3.BackgroundTransparency = 1.000
+Title_3.BorderSizePixel = 0
+Title_3.Position = UDim2.new(0, 5, 0, 0)
+Title_3.Size = UDim2.new(0, 170, 0, 20)
+Title_3.Font = Enum.Font.GothamMedium
+Title_3.Text = "Commands"
+Title_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title_3.TextSize = 14.000
+Title_3.TextXAlignment = Enum.TextXAlignment.Left
+
+UICorner_6.CornerRadius = UDim.new(0, 5)
+UICorner_6.Parent = CMDTopbar
 
 cmdHandler.Name = "cmdHandler"
 cmdHandler.Parent = CMDFrame
 cmdHandler.Active = true
 cmdHandler.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 cmdHandler.BackgroundTransparency = 1.000
-cmdHandler.ClipsDescendants = true
-cmdHandler.AutomaticCanvasSize = "Y"
-cmdHandler.Position = UDim2.new(0, 0, 0.088888891, 0)
-cmdHandler.Size = UDim2.new(0, 175, 0, 290)
-cmdHandler.CanvasSize = UDim2.new(1, 0, 9, 0)
+cmdHandler.BorderSizePixel = 0
+cmdHandler.Position = UDim2.new(0, 0, 0.12512216, 0)
+cmdHandler.Size = UDim2.new(0, 175, 0, 297)
+cmdHandler.CanvasSize = UDim2.new(0, 0, 9, 0)
 
-uiList.Name = "uiList"
-uiList.Parent = cmdHandler
-uiList.SortOrder = Enum.SortOrder.LayoutOrder
-uiList.Padding = UDim.new(0, 5)
+cmdUIList.Name = "cmdUIList"
+cmdUIList.Parent = cmdHandler
+cmdUIList.SortOrder = Enum.SortOrder.LayoutOrder
+cmdUIList.Padding = UDim.new(0, 5)
 
+cmdText.Name = "cmdText"
 cmdText.Parent = nil
 cmdText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 cmdText.BackgroundTransparency = 1.000
+cmdText.BorderColor3 = Color3.fromRGB(27, 42, 53)
+cmdText.Position = UDim2.new(0, 0, 1.02752786e-07, 0)
 cmdText.Size = UDim2.new(0, 175, 0, 22)
 cmdText.Font = Enum.Font.SourceSans
-cmdText.Text = ""
-cmdText.TextColor3 = Color3.fromRGB(247, 247, 247)
+cmdText.TextColor3 = Color3.fromRGB(255, 255, 255)
 cmdText.TextSize = 14.000
 
-HOMEFrame.Name = "HOMEFrame"
-HOMEFrame.Parent = AquaAdmin
-HOMEFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
-HOMEFrame.Position = UDim2.new(0.306734979, 0, 0.618243217, 0)
-HOMEFrame.Size = UDim2.new(0, 525, 0, 166)
+UICorner_7.CornerRadius = UDim.new(0.0500000007, 0)
+UICorner_7.Parent = CMDFrame
 
-UICorner_6.CornerRadius = UDim.new(0.0500000007, 0)
-UICorner_6.Parent = HOMEFrame
+NOTIFrame.Name = "NOTIFrame"
+NOTIFrame.Parent = Aqua
+NOTIFrame.Active = true
+NOTIFrame.BackgroundColor3 = Color3.fromRGB(34, 38, 42)
+NOTIFrame.BackgroundTransparency = 0.200
+NOTIFrame.BorderSizePixel = 0
+NOTIFrame.ClipsDescendants = true
+NOTIFrame.Position = UDim2.new(0.699320614, 0, 0.484614253, 0)
+NOTIFrame.Size = UDim2.new(0, 225, 0, 125)
 
-Title.Name = "Title"
-Title.Parent = HOMEFrame
-Title.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-Title.Size = UDim2.new(0, 525, 0, 20)
-Title.Font = Enum.Font.GothamMedium
-Title.Text = "Aqua Admin"
-Title.TextColor3 = Color3.fromRGB(247, 247, 247)
-Title.TextSize = 14.000
-Title.TextXAlignment = Enum.TextXAlignment.Left
+NOTITopbar.Name = "NOTITopbar"
+NOTITopbar.Parent = NOTIFrame
+NOTITopbar.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+NOTITopbar.BorderSizePixel = 0
+NOTITopbar.Size = UDim2.new(1, 0, 0, 20)
 
-UICorner_7.CornerRadius = UDim.new(0, 5)
-UICorner_7.Parent = Title
+Title_4.Name = "Title"
+Title_4.Parent = NOTITopbar
+Title_4.Active = true
+Title_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title_4.BackgroundTransparency = 1.000
+Title_4.BorderSizePixel = 0
+Title_4.Position = UDim2.new(0, 5, 0, 0)
+Title_4.Size = UDim2.new(0, 170, 0, 20)
+Title_4.Font = Enum.Font.GothamMedium
+Title_4.Text = "Notification"
+Title_4.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title_4.TextSize = 14.000
+Title_4.TextXAlignment = Enum.TextXAlignment.Left
 
-credits.Name = "credits"
-credits.Parent = HOMEFrame
-credits.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-credits.BackgroundTransparency = 1.000
-credits.Position = UDim2.new(0, 5, 0, 25)
-credits.Size = UDim2.new(0, 275, 1, -30)
-credits.Font = Enum.Font.SourceSans
-credits.Text = "UI made by Jam3213."
-credits.TextColor3 = Color3.fromRGB(247, 247, 247)
-credits.TextSize = 16.000
-credits.TextWrapped = true
-credits.TextXAlignment = Enum.TextXAlignment.Left
-credits.TextYAlignment = Enum.TextYAlignment.Top
+UICorner_8.CornerRadius = UDim.new(0, 5)
+UICorner_8.Parent = NOTITopbar
 
-NotiFrame.Name = "Notiframe"
-NotiFrame.Parent = AquaAdmin
-NotiFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
-NotiFrame.Position = UDim2.new(0.690999985, 30, 0.618243217, 0)
-NotiFrame.Size = UDim2.new(0, 175, 0, 100)
+UICorner_9.CornerRadius = UDim.new(0.0500000007, 0)
+UICorner_9.Parent = NOTIFrame
 
-Topbar.Name = "Topbar"
-Topbar.Parent = NotiFrame
-Topbar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-Topbar.Size = UDim2.new(1, 0, 0, 20)
-Topbar.Font = Enum.Font.GothamMedium
-Topbar.Text = "  "
-Topbar.TextColor3 = Color3.fromRGB(247, 247, 247)
-Topbar.TextSize = 14.000
-Topbar.TextXAlignment = Enum.TextXAlignment.Left
-
-UICorner_8.CornerRadius = UDim.new(0.0500000007, 0)
-UICorner_8.Parent = NotiFrame
-
-UICorner_9.CornerRadius = UDim.new(0, 5)
-UICorner_9.Parent = Topbar
-
-cmdTitle.Parent = NotiFrame
+cmdTitle.Name = "cmdTitle"
+cmdTitle.Parent = NOTIFrame
 cmdTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 cmdTitle.BackgroundTransparency = 1.000
-cmdTitle.Position = UDim2.new(0, 10, 0.344000012, 0)
-cmdTitle.Size = UDim2.new(1, -20, 0, 50)
+cmdTitle.Position = UDim2.new(0.0529999994, 0, 0.216000006, 0)
+cmdTitle.Size = UDim2.new(0, 200, 0, 75)
 cmdTitle.Font = Enum.Font.SourceSans
-cmdTitle.TextColor3 = Color3.fromRGB(247, 247, 247)
-cmdTitle.TextSize = 16.000
+cmdTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+cmdTitle.TextSize = 14.000
 
 Background4.Name = "Background4"
-Background4.Parent = AquaAdmin
+Background4.Parent = Aqua
 Background4.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 Background4.BorderSizePixel = 0
 Background4.Position = UDim2.new(0.0154639352, 0, 0.519107938, 0)
@@ -346,8 +484,12 @@ Cmd[#Cmd + 1] =	{Text = "unspamarrest / unlooparrest [plr]",Title = "Stop spam a
 Cmd[#Cmd + 1] =	{Text = "clearloopkill / clearloopkills",Title = "clear all loop kills table"}
 Cmd[#Cmd + 1] =	{Text = "auto / autore / autorefresh",Title = "Auto respawn on old position when died"}
 Cmd[#Cmd + 1] =	{Text = "unauto / unautore / unautorefresh",Title = "Stop auto respawn on old position when died"}
-Cmd[#Cmd + 1] =	{Text = "killaura",Title = "Activate kill aura"}
-Cmd[#Cmd + 1] =	{Text = "nokillaura / unkillaura",Title = "Unactivate kill aura"}
+Cmd[#Cmd + 1] = {Text = "antitp / antibring",Title = "You are cannot be bring by another exploiter"}
+Cmd[#Cmd + 1] = {Text = "unantitp / unantibring",Title = "You are can be bring by another exploiter"}
+Cmd[#Cmd + 1] = {Text = "killsaura [plr]",Title = "Gives player a kill aura"}
+Cmd[#Cmd + 1] = {Text = "nokillsaura [plr]",Title = "Remove a kill aura from player"}
+Cmd[#Cmd + 1] = {Text = "addvirus / virus [plr]",Title = "Virus player"}
+Cmd[#Cmd + 1] = {Text = "removevirus / revirus [plr]",Title = "Remove a virus from a player"}
 Cmd[#Cmd + 1] = {Text = "antifling",Title = "Activate anti fling"}
 Cmd[#Cmd + 1] = {Text = "unantifling",Title = "Unactivate anti fling"}
 Cmd[#Cmd + 1] = {Text = "god",Title = "Become a god mode"}
@@ -447,6 +589,10 @@ Cmd[#Cmd + 1] =	{Text = "crash / beam3 [plr]",Title = "Shoot a beam to player bu
 Cmd[#Cmd + 1] = {Text = "antispamarrest",Title = "Activate anti spam arrest"}
 Cmd[#Cmd + 1] = {Text = "unantispamarrest",Title = "Unactivate anti spam arrest"}
 Cmd[#Cmd + 1] =	{Text = "!getprefix",Title = "If you for get prefix you can type this in chat"}
+Cmd[#Cmd + 1] = {Text = "fly / flight [speed]",Title = "Enables flight"}
+Cmd[#Cmd + 1] = {Text = "unfly",Title = "Disables flight"}
+Cmd[#Cmd + 1] = {Text = "vfly / vflight [speed]",Title = "Enables vehicle flight"}
+Cmd[#Cmd + 1] = {Text = "unvfly / unvflight",Title = "Disables vehicle flight"}
 
 local Mouse = game.Players.LocalPlayer:GetMouse()
 
@@ -491,12 +637,12 @@ Mouse.Move:Connect(function()
 		else
 			PositionY = Mouse.Y
 		end
-		NotiFrame.Visible = true
-		NotiFrame.Position = UDim2.new(0, PositionX, 0, PositionY)
-		Topbar.Text = Gui.TopbarName.Value
+		NOTIFrame.Visible = true
+		NOTIFrame.Position = UDim2.new(0, PositionX, 0, PositionY)
+		Title_4.Text = Gui.TopbarName.Value
 		cmdTitle.Text = Gui.Title.Value
 	else
-		NotiFrame.Visible = false
+		NOTIFrame.Visible = false
 	end
 end)
 
@@ -509,9 +655,10 @@ local ScriptDisabled = false
 local LoopBeam = {}
 local LoopKill = {}
 local LoopTase = {}
+local Virus = {}
+local KillAura = {}
 local Admin = {}
 local Watching = nil
-local States = {}
 local BuyGamepass = game:GetService("MarketplaceService"):UserOwnsGamePassAsync(tonumber((game:GetService("Players").LocalPlayer.CharacterAppearance):split('=')[#((game:GetService("Players").LocalPlayer.CharacterAppearance):split('='))]), 96651)
 
 local function GetPlayer(String)
@@ -529,12 +676,13 @@ local function GetPlayer(String)
 	end
 end
 
-local function GetPos()
-	return game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+function getRoot(char)
+	local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
+	return rootPart
 end
 
-local function GetCamPos()
-	return workspace.CurrentCamera.CFrame
+local function GetPos()
+	return game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 end
 
 local function GetTeam()
@@ -562,6 +710,104 @@ end
 
 function Chat(Message, Whisper)
 	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(Message, Whisper or "ALl")
+end
+
+FLYING = false
+QEfly = true
+flightspeed = 1
+vehicleflyspeed = 1
+function sFLY(vfly)
+	repeat wait() until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and getRoot(game.Players.LocalPlayer.Character) and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+	repeat wait() until Mouse
+	if flyKeyDown or flyKeyUp then flyKeyDown:Disconnect() flyKeyUp:Disconnect() end
+
+	local T = getRoot(game.Players.LocalPlayer.Character)
+	local CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+	local lCONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+	local SPEED = 0
+
+	local function FLY()
+		FLYING = true
+		local BG = Instance.new('BodyGyro')
+		local BV = Instance.new('BodyVelocity')
+		BG.P = 9e4
+		BG.Parent = T
+		BV.Parent = T
+		BG.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+		BG.cframe = T.CFrame
+		BV.velocity = Vector3.new(0, 0, 0)
+		BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
+		task.spawn(function()
+			repeat wait()
+				if not vfly and game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid') then
+					game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').PlatformStand = true
+				end
+				if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0 then
+					SPEED = 50
+				elseif not (CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0) and SPEED ~= 0 then
+					SPEED = 0
+				end
+				if (CONTROL.L + CONTROL.R) ~= 0 or (CONTROL.F + CONTROL.B) ~= 0 or (CONTROL.Q + CONTROL.E) ~= 0 then
+					BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (CONTROL.F + CONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(CONTROL.L + CONTROL.R, (CONTROL.F + CONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+					lCONTROL = {F = CONTROL.F, B = CONTROL.B, L = CONTROL.L, R = CONTROL.R}
+				elseif (CONTROL.L + CONTROL.R) == 0 and (CONTROL.F + CONTROL.B) == 0 and (CONTROL.Q + CONTROL.E) == 0 and SPEED ~= 0 then
+					BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (lCONTROL.F + lCONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(lCONTROL.L + lCONTROL.R, (lCONTROL.F + lCONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+				else
+					BV.velocity = Vector3.new(0, 0, 0)
+				end
+				BG.cframe = workspace.CurrentCamera.CoordinateFrame
+			until not FLYING
+			CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+			lCONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+			SPEED = 0
+			BG:Destroy()
+			BV:Destroy()
+			if game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid') then
+				game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').PlatformStand = false
+			end
+		end)
+	end
+	flyKeyDown = Mouse.KeyDown:Connect(function(KEY)
+		if KEY:lower() == 'w' then
+			CONTROL.F = (vfly and vehicleflyspeed or flightspeed)
+		elseif KEY:lower() == 's' then
+			CONTROL.B = - (vfly and vehicleflyspeed or flightspeed)
+		elseif KEY:lower() == 'a' then
+			CONTROL.L = - (vfly and vehicleflyspeed or flightspeed)
+		elseif KEY:lower() == 'd' then 
+			CONTROL.R = (vfly and vehicleflyspeed or flightspeed)
+		elseif QEfly and KEY:lower() == 'e' then
+			CONTROL.Q = (vfly and vehicleflyspeed or flightspeed)*2
+		elseif QEfly and KEY:lower() == 'q' then
+			CONTROL.E = -(vfly and vehicleflyspeed or flightspeed)*2
+		end
+		pcall(function() workspace.CurrentCamera.CameraType = Enum.CameraType.Track end)
+	end)
+	flyKeyUp = Mouse.KeyUp:Connect(function(KEY)
+		if KEY:lower() == 'w' then
+			CONTROL.F = 0
+		elseif KEY:lower() == 's' then
+			CONTROL.B = 0
+		elseif KEY:lower() == 'a' then
+			CONTROL.L = 0
+		elseif KEY:lower() == 'd' then
+			CONTROL.R = 0
+		elseif KEY:lower() == 'e' then
+			CONTROL.Q = 0
+		elseif KEY:lower() == 'q' then
+			CONTROL.E = 0
+		end
+	end)
+	FLY()
+end
+
+function NOFLY()
+	FLYING = false
+	if flyKeyDown or flyKeyUp then flyKeyDown:Disconnect() flyKeyUp:Disconnect() end
+	if game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid') then
+		game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').PlatformStand = false
+	end
+	pcall(function() workspace.CurrentCamera.CameraType = Enum.CameraType.Custom end)
 end
 
 function WaitForChild(Time, Parent, Child)
@@ -1099,11 +1345,41 @@ function PlayerChatted(Message)
 	Arg2 = Split[2]
 	Arg3 = Split[3]
 	Arg4 = Split[4]
+	if Command("killaura") then
+		States.Kill_Aura = true
+		Notify("Turn kill aura on", Color3.fromRGB(0, 255, 0), "Success")
+	end
+	if Command("nokillaura") or Command("unkillaura") then
+		States.Kill_Aura = false
+		Notify("Turn kill aura off", Color3.fromRGB(0, 255, 0), "Success")
+	end
+	if Command("virus") or Command("addvirus") then
+		local Player = GetPlayer(Arg2)
+		if Player and not Virus[Player.UserId] then
+			Virus[Player.UserId] = {Player = Player}
+			Notify("Added virus to "..Player.DisplayName, Color3.fromRGB(0, 255, 0), "Success")
+		elseif Player and Virus[Player.UserId] then
+			Notify(Player.DisplayName.." already have viruses", Color3.fromRGB(255, 255, 0), "Warn")
+		elseif Player == nil then
+			Notify("No player found", Color3.fromRGB(255, 0, 0), "Error")
+		end
+	end
+	if Command("revirus") or Command("removevirus") then
+		local Player = GetPlayer(Arg2)
+		if Player and Virus[Player.UserId] then
+			Virus[Player.UserId] = nil
+			Notify("Removed viruses from "..Player.DisplayName, Color3.fromRGB(0, 255, 0), "Success")
+		elseif Player and not Virus[Player.UserId] then
+			Notify(Player.DisplayName.." don't have virus", Color3.fromRGB(255, 255, 0), "Warn")
+		elseif Player == nil then
+			Notify("No player found", Color3.fromRGB(255, 0, 0), "Error")
+		end
+	end
 	if Command("unload") or Command("destroygui") then
 		Notify("Unloading...", Color3.fromRGB(0, 255, 255), "Unloads")
 		wait(.1)
 		pcall(function()
-			AquaAdmin:Destroy()
+			Aqua:Destroy()
 			States = {}
 			LoopKill = {}
 			LoopTase = {}
@@ -1114,10 +1390,34 @@ function PlayerChatted(Message)
 			end
 		end)
 	end
+	if Command("fly") or Command("flight") then
+		local FlightSpeed = tonumber(Arg2)
+		if FlightSpeed ~= nil then
+			FlightSpeed = flightspeed
+		end
+		Notify("Flight ", Color3.fromRGB(0, 255, 0), "Enabled")
+		NOFLY()
+		wait()
+		sFLY()
+	end
+	if Command("unfly") then
+		Notify("Flight ", Color3.fromRGB(0, 255, 0), "Disabled")
+		NOFLY()
+	end
+	if Command("vfly") or Command("vflight") then
+		local vflightspeed = tonumber(Arg2)
+		if vflightspeed ~= nil then
+			vflightspeed = vehicleflyspeed
+		end
+		Notify("Flight ", Color3.fromRGB(0, 255, 0), "Enabled")
+		NOFLY()
+		wait()
+		sFLY()
+	end
 	if Command("reload") or Command("update") then
 		Notify("Updating versions...", Color3.fromRGB(0, 255, 255), "Updates")
 		pcall(function()
-			CmdGui:Destroy()
+			Aqua:Destroy()
 			States = {}
 			LoopKill = {}
 			LoopTase = {}
@@ -2470,7 +2770,7 @@ function PlayerChatted(Message)
 		Notify("Turn auto rapid fire off", Color3.fromRGB(0, 255, 0), "Success")
 	end
 	if Command("notifybar") then
-		NotiFrame.Visible = true
+		NOTIFrame.Visible = true
 	end
 	if Command("loopbring") then
 		local Player = GetPlayer(Arg2)
@@ -3051,11 +3351,11 @@ game.Players.LocalPlayer.CharacterAdded:Connect(function()
 	States.CAN = false
 end)
 
-findCMD.Changed:Connect(function()
-	if findCMD.Text ~= "" then
+findCmd.Changed:Connect(function()
+	if findCmd.Text ~= "" then
 		for i,v in pairs(cmdHandler:GetChildren()) do
 			if v:IsA("TextButton") then
-				if not string.lower(v.Text):match(string.lower(findCMD.Text)) then
+				if not string.lower(v.Text):match(string.lower(findCmd.Text)) then
 					v.Parent = CMDFrame
 					v.Visible = false
 				end
@@ -3063,13 +3363,13 @@ findCMD.Changed:Connect(function()
 		end
 		for i,v in pairs(CMDFrame:GetChildren()) do
 			if v.Name == "COMMANDS" then
-				if string.lower(v.Text):match(string.lower(findCMD.Text)) then
+				if string.lower(v.Text):match(string.lower(findCmd.Text)) then
 					v.Parent = cmdHandler
 					v.Visible = true
 				end
 			end
 		end
-	elseif findCMD.Text == "" and (#cmdHandler:GetChildren()-1) ~= #Cmd  then
+	elseif findCmd.Text == "" and (#cmdHandler:GetChildren()-1) ~= #Cmd  then
 		for i,v in pairs(cmdHandler:GetChildren()) do
 			if v:IsA("TextButton") then
 				v:Destroy()
@@ -3118,7 +3418,7 @@ end)
 
 getgenv().DisableScript = function()
 	pcall(function()
-		AquaAdmin:Destroy()
+		Aqua:Destroy()
 		States = {}
 		LoopKill = {}
 		LoopTase = {}
